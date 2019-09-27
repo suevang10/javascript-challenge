@@ -1,4 +1,4 @@
-// Get references to the tbody element, input field and button
+// Get references to tbody elements, input field and button
 var $tbody = document.querySelector("tbody");
 var $dateInput = document.querySelector("#datetime");
 var $stateInput = document.querySelector("#state");
@@ -7,25 +7,26 @@ var $cityInput = document.querySelector("#city");
 var $countryInput = document.querySelector("#country");
 var $shapeInput = document.querySelector("#shape");
 
-
-// Add an event listener to the searchButton, call handleSearchButtonClick when clicked
+// Adding eventlistener to searchButton to allow customization of user
 $searchBtn.addEventListener("click", handleSearchButtonClick);
 
-// Set filteredAddresses to dataSet initially
-var filteredTable = dataSet;
+// Set initial dataset to variable filtTable
+var filtTable = dataSet;
 
-// renderTable renders the filteredAddresses to the tbody
-function renderTable() {
+// rendTable renders the filtTable to the tbody
+function rendTable() {
   $tbody.innerHTML = "";
-  for (var i = 0; i < filteredTable.length; i++) {
+  for (var i = 0; i < filtTable.length; i++) {
     // Get get the current address object and its fields
-    var address = filteredTable[i];
+    var address = filtTable[i];
     console.log(address)
     var fields = Object.keys(address);
-    // Create a new row in the tbody, set the index to be i + startingIndex
+    // insert in a new row and increase index with i + 
     var $row = $tbody.insertRow(i);
     for (var j = 0; j < fields.length; j++) {
-      // For every field in the address object, create a new cell at set its inner text to be the current value at the current address's field
+      // For every field in the address object, create a new cell
+      // at set its inner text to be the current value at the 
+      // current address's field
       var field = fields[j];
       var $cell = $row.insertCell(j);
       $cell.innerText = address[field];
@@ -34,75 +35,61 @@ function renderTable() {
 }
 
 function handleSearchButtonClick() {
-  // Format the user's search by removing leading and trailing whitespace, lowercase the string
+  // Format user's search by removing any whitespace, and lowercase string
   var filterDate = $dateInput.value;
   var filterState = $stateInput.value.trim().toLowerCase();
   var filterCity = $cityInput.value.trim().toLowerCase();
   var filterCountry = $countryInput.value.trim().toLowerCase();
   var filterShape = $shapeInput.value.trim().toLowerCase();
 
-  // Set filteredAddresses to an array of all addresses whose "state" matches the filter
-  if (filterDate != "")
-  {
-    filteredTable = dataSet.filter(function(address) 
-    {
-      var addressDate = address.datetime; 
-    
-    // If true, add the address to the filteredAddresses, otherwise don't add it to filteredAddresses
-    return addressDate === filterDate;
+  // Set filterAddresses to array of addresses whose "state"
+  // matches the filter
+  if (filterDate != "") {
+    filtTable = dataSet.filter(function(address) 
+    { var addressDate = address.datetime; 
+      return addressDate === filterDate;
     });
   }
-  else {filteredTable};
+  else {filtTable};
   
-
-  if(filterState != "")
-  {
-    filteredTable = filteredTable.filter(function(address)
-    {
-      var addressState = address.state;
+  if(filterState != "") {
+    filtTable = filtTable.filter(function(address)
+    { var addressState = address.state;
       return addressState === filterState;
     });
   }
-  else{filteredTable};
+  else{filtTable};
 
-  if(filterCity != "")
-  {
-    filteredTable = filteredTable.filter(function(address)
-    {
-      var addressCity = address.city;
+  if(filterCity != "") {
+    filtTable = filtTable.filter(function(address)
+    { var addressCity = address.city;
       return addressCity === filterCity;
     });
   }
+  else{filtTable};
 
-  else{filteredTable};
-
-  if(filterCountry != "")
-  {
-    filteredTable = filteredTable.filter(function(address)
-    {
-      var addressCountry = address.country;
+  if(filterCountry != "") {
+    filtTable = filtTable.filter(function(address)
+    { var addressCountry = address.country;
       return addressCountry === filterCountry;
     });
   }
-  else{filteredTable};
+  else{filtTable};
 
-  if(filterShape != "")
-  {
-    filteredTable = filteredTable.filter(function(address)
-    {
-      var addressShape = address.shape;
+  if(filterShape != "") {
+    filtTable = filtTable.filter(function(address)
+    { var addressShape = address.shape;
       return addressShape === filterShape;
     });
   }
-  else{filteredTable};
+  else{filtTable};
 
-renderTable();
-
+rendTable();
 }
 
-// Render the table for the first time on page load
-renderTable();
-
+// Render the table when page initially load
+rendTable();
+s
 $(document).ready(function() {
   $('#table').DataTable();
 });
